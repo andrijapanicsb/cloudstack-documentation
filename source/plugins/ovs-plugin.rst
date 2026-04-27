@@ -400,7 +400,7 @@ Applying additional configurations via service offerings
 
 It is possible to avoid passing additional configuration on each Instance deployment, but setting these configurations on a service offering, and those are passed to the Instance.
 
-- To create a service offering with additional configurations, pass each key/value pair as service offering details on service offering creation, with keys starting with the "extraconfig" keyword, and each value an URL UTF-8 encoded string.
+- To create a service offering with additional configurations, pass each key/value pair as service offering details on service offering creation, with keys starting with the "extraconfig" keyword, and each value a URL UTF-8 encoded string.
 - Additional configurations are stored as service offering details
 
 For example, applying DPDK additional configurations via service offering:

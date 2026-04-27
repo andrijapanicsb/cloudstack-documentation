@@ -147,12 +147,12 @@ following global configurations:
 Based on the above configurations CloudStack will purge older deliveries in
 the database using a repeatedly running task.
 
-For a webhook delivery, CloudStack sends a HTTP POST request with event data
+For a webhook delivery, CloudStack sends an HTTP POST request with event data
 as the payload. The following custom headers are sent with the request:
 
    -  **X-CS-Event-ID**. Event ID for which the webhook delivery is made.
 
-   -  **X-CS-Event**. Event for for which the webhook delivery is made.
+   -  **X-CS-Event**. Event for which the webhook delivery is made.
 
    -  **User-Agent**. In the format - *CS-Hookshot/<ACCOUNT_ID>*. Here
       ACCOUNT_ID is the ID of the account which triggered the event.

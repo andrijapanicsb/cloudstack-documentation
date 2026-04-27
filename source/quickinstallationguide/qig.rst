@@ -227,7 +227,7 @@ NTP (Chrony)
 
 NTP configuration is a necessity for keeping all of the clocks in your cloud 
 servers in sync. However, NTP is not installed by default. So we'll install 
-and and configure NTP at this stage. Installation is accomplished as follows:
+and configure NTP at this stage. Installation is accomplished as follows:
 
 .. parsed-literal::
 
@@ -252,7 +252,7 @@ We need to configure the machine to use a CloudStack package repository.
 .. note:: 
    The Apache CloudStack official releases are source code. As such there are 
    no 'official' binaries available. The full installation guide describes how 
-   to take the source release and generate RPMs and and yum repository. This 
+   to take the source release and generate RPMs and a yum repository. This
    guide attempts to keep things as simple as possible, and thus we are using 
    one of the community-provided yum repositories. Furthermore, this example 
    assumes a |release| Cloudstack install - substitute versions as needed.

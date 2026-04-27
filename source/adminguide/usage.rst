@@ -880,7 +880,7 @@ The following table shows all usage types.
 Example response from listUsageRecords
 --------------------------------------
 
-All CloudStack API requests are submitted in the form of a HTTP GET/POST
+All CloudStack API requests are submitted in the form of an HTTP GET/POST
 with an associated command and any parameters. A request is composed of
 the following whether in HTTP or HTTPS:
 

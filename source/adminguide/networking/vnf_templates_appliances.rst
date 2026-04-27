@@ -17,14 +17,14 @@
 VNF Templates and Appliances
 ============================
 
-Virtualized Network Functions (VNFs) refers to virtualized software applications
-which offers network services, for example routers, firewalls, load balancers.
+Virtualized Network Functions (VNFs) refer to virtualized software applications
+which offer network services, for example routers, firewalls, load balancers.
 
 
-Adding a VNF template from an URL
+Adding a VNF template from a URL
 -----------------------------------------------------------
 
-To create a VNF appliance, user needs to register a VNF template and add VNF settings.
+To create a VNF appliance, a user needs to register a VNF template and add VNF settings.
 
 #. Log in to the CloudStack UI as an administrator or end user.
 

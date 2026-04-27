@@ -71,7 +71,7 @@ You can find all the API reference documentation at the below site:
 Making API Requests
 ~~~~~~~~~~~~~~~~~~~~
 
-All CloudStack API requests are submitted in the form of a HTTP GET/POST
+All CloudStack API requests are submitted in the form of an HTTP GET/POST
 with an associated command and any parameters. A request is composed of
 the following whether in HTTP or HTTPS:
 
