@@ -55,7 +55,7 @@ from the Management Server.
 The exact commands for the following steps may vary depending on your
 operating system version.
 The following steps assume you already have an NFS Server installed on your storage
-system. Please refer to the guide of your OS on how to install a NFS Server.
+system. Please refer to the guide of your OS on how to install an NFS Server.
 
 .. warning::
    (KVM only) Ensure that no volume is already mounted at your NFS mount point.

@@ -91,10 +91,10 @@ files. If Non-OSS components, such as VMware environments, are to be
 deployed, modify the ``UserPasswordEncoders`` and ``UserAuthenticators``
 lists in the ``nonossComponentContext.xml`` file, for OSS environments,
 such as XenServer or KVM, modify the ``ComponentContext.xml`` file. It
-is recommended to make uniform changes across both the files. When a new
+is recommended to make uniform changes across both files. When a new
 authenticator or encoder is added, you can add them to this list. While
 doing so, ensure that the new authenticator or encoder is specified as a
-bean in both these files. The administrator can change the ordering of
+bean in both files. The administrator can change the ordering of
 both these properties as preferred to change the order of schemes.
 Modify the following list properties available in
 ``client/tomcatconf/nonossComponentContext.xml.in`` or

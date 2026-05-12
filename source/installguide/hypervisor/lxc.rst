@@ -168,7 +168,7 @@ the `downloads <http://cloudstack.apache.org/downloads.html>`_ page.
 RPM package repository
 ~~~~~~~~~~~~~~~~~~~~~~
 
-There is a RPM package repository for CloudStack so you can easily
+There is an RPM package repository for CloudStack so you can easily
 install on RHEL and SUSE based platforms.
 
 If you're using an RPM-based system, you'll want to add the Yum

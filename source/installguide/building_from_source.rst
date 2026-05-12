@@ -212,9 +212,9 @@ Make sure to activate the repository for MySQL connectors.
 
 .. note::
 
-   Below is given a bit different procedure if you are compiling on Ubuntu 18.04
+   A slightly different procedure is given below if you are compiling on Ubuntu 18.04.
 
-Due to default python version changes (and some others) in Ubuntu 18.04 version, we will need to install python 2.7, python-mysql.connector from Universe repo (instead from official MySQL repo) and later make sure we are using Java 8, since Java 10 comes as default
+Due to default Python version changes (and others) in Ubuntu 18.04, you will need to install Python 2.7 and python-mysql.connector from the Universe repo (instead of from the official MySQL repo), and later make sure you are using Java 8, since Java 10 is the default.
 
 .. parsed-literal::
 

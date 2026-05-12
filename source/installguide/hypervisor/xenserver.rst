@@ -175,7 +175,7 @@ steps on each XenServer host.
 
 CSP functionality is already present in XenServer 6.1
 
-#. Run the below command
+#. Run the command below
    
    .. parsed-literal::
 

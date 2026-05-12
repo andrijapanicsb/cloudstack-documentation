@@ -555,9 +555,9 @@ Core Zone
       a route to the DNS server named here.
 
    -  **Internal DNS 1 and Internal DNS 2.** (DNS 1 obligatory)
-      These are DNS servers for use by system VMs in the zone(these are
+      These are DNS servers for use by system VMs in the zone (these are
       instances used by CloudStack itself, such as virtual routers, console
-      proxies,and Secondary Storage VMs.) These DNS servers will be accessed via the
+      proxies, and Secondary Storage VMs.) These DNS servers will be accessed via the
       management traffic network interface of the System VMs. The private
       IP address you provide for the pods must have a route to
       the internal DNS server named here.
@@ -1865,7 +1865,7 @@ the more useful parameters.
 Field                              Value
 =================================  ================================================================================
 management.network.cidr            A CIDR that describes the network that the management CIDRs reside on. This                                        variable must be set for deployments that use vSphere. It is recommended to be                                     set for other deployments as well. Example: 192.168.3.0/24.
-xen.setup.multipath                For XenServer nodes, this is a true/false variable that instructs CloudStack to                                    enable iSCSI multipath on the XenServer Hosts when they are added. This                                            defaults to false. Set it to true if you would like CloudStack to enable                                           multipath.If this is true for a NFS-based deployment multipath will still be                                       enabled on the XenServer host. However, this does not impact NFS operation and                                     is harmless.
+xen.setup.multipath                For XenServer nodes, this is a true/false variable that instructs CloudStack to                                    enable iSCSI multipath on the XenServer Hosts when they are added. This                                            defaults to false. Set it to true if you would like CloudStack to enable                                           multipath. If this is true for an NFS-based deployment multipath will still be                                     enabled on the XenServer host. However, this does not impact NFS operation and                                     is harmless.
 secstorage.allowed.internal.sites  This is used to protect your internal network from rogue attempts to download                                      arbitrary files using the Template download feature. This is a comma-separated                                     list of CIDRs. If a requested URL matches any of these CIDRs the Secondary                                         Storage VM will use the private network interface to fetch the URL. Other URLs                                     will go through the public interface. We suggest you set this to 1 or 2                                            hardened internal machines where you keep your Templates. For example, set it                                      to 192.168.1.66/32.
 use.local.storage                  Determines whether CloudStack will use storage that is local to the Host for                                       data disks, Templates, and Snapshots. By default CloudStack will not use this                                      storage. You should change this to true if you want to use local storage and                                       you understand the reliability and feature drawbacks to choosing local storage.
 host                               This is the IP address of the Management Server. If you are using multiple                                         Management Servers you should enter a load balanced IP address that is                                             reachable via the private network.
