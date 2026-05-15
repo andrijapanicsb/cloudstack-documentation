@@ -113,7 +113,7 @@ securing the MySQL server, configuring NTP or using Ansible to configure
 the networking on the hosts either. Although normally we’d use Ansible
 to do exactly that.
 
-The pre-requisites to this CloudStack build are:
+The prerequisites for this CloudStack build are:
 
 -  A CentOS 6.4 host to install CloudStack on
 

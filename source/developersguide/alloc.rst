@@ -21,7 +21,7 @@ CloudStack enables administrators to write custom allocators that will
 choose the Host to place a new guest and the storage host from which to
 allocate guest virtual disk images.
 
-These are following categories of allocators currently supported:
+The following categories of allocators are currently supported:
 
 -  HostAllocators - Allows you to create custom rules to determine which
    physical host to allocate the Guest Instances on.

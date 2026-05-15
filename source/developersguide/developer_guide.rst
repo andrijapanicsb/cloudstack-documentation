@@ -70,9 +70,9 @@ and managed using jenv.
 Installing CloudStack from Source
 ----------------------------------
 
-CloudStack uses git for source version control, if you know little about
-`git <http://book.git-scm.com/>`__ is a good start. Once you have git
-setup on your machine, pull the source with:
+CloudStack uses git for source version control. If you know little about
+git, `git <http://book.git-scm.com/>`__ is a good place to start. Once you
+have git set up on your machine, pull the source with:
 
 ::
 
@@ -142,11 +142,11 @@ Replace ``localhost`` with the IP of your management server if need be.
    If you have iptables enabled, you may have to open the ports used by
    CloudStack. Specifically, ports 8080, 8250, and 9090.
 
-You can now start configuring a Zone, playing with the API. Of course we
-did not setup any infrastructure, there is no storage, no
-hypervisors...etc. However you can run tests using the simulator. The
+You can now start configuring a Zone and playing with the API. Of course, we
+did not set up any infrastructure; there is no storage, no
+hypervisors, etc. However, you can run tests using the simulator. The
 following section shows you how to use the simulator so that you don't
-have to setup a physical infrastructure.
+have to set up a physical infrastructure.
 
 
 Using the Simulator
@@ -185,7 +185,7 @@ Start jetty with the simulator enabled
 
    mvn -Dsimulator -pl :cloud-client-ui jetty:run
 
-Setup a basic or advanced zone with Marvin. In a separate shell://
+Set up a basic or advanced zone with Marvin. In a separate shell:
 
 ::
 
@@ -193,8 +193,8 @@ Setup a basic or advanced zone with Marvin. In a separate shell://
    OR
    python3 tools/marvin/marvin/deployDataCenter.py -i setup/dev/advanced.cfg
 
-At this stage log in the CloudStack management server UI at
-http://localhost:5050 or using CLI with the API endpoint at
+At this stage, log in to the CloudStack management server UI at
+http://localhost:5050 or use the CLI with the API endpoint at
 http://localhost:8080/client with the credentials admin/password, you should see
 a fully configured zone infrastructure.
 
@@ -267,7 +267,7 @@ available in the installation book.
 The CloudStack API
 ------------------
 
-The CloudStack API is a query based API using http that return results
+The CloudStack API is a query-based API using HTTP that returns results
 in XML or JSON. It is used to implement the default web UI. This API is
 not a standard like `OGF
 OCCI <http://www.ogf.org/gf/group_info/view.php?group=occi-wg>`__ or
