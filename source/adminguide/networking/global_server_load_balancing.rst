@@ -19,7 +19,7 @@ Global Server Load Balancing Support
 
 CloudStack supports Global Server Load Balancing (GSLB) functionalities
 to provide business continuity, and enable seamless resource movement
-within a CloudStack environment. CloudStack achieve this by extending
+within a CloudStack environment. CloudStack achieves this by extending
 its functionality of integrating with NetScaler Application Delivery
 Controller (ADC), which also provides various GSLB capabilities, such as
 disaster recovery and load balancing. The DNS redirection technique is
@@ -36,7 +36,7 @@ data center environment.
    Global Server Load Balancing is currently not supported in the new UI.
    To manage Global Server Load Balancing, please directly invoke the
    respective APIs or use `cloudmonkey <https://github.com/apache/cloudstack-cloudmonkey>`_,
-   the CLI tool for cloudstack
+   the CLI tool for CloudStack
 
 About Global Server Load Balancing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +108,7 @@ A typical GSLB environment is comprised of the following components:
    ADNS service IP and port.
 
 
-How Does GSLB Works in CloudStack?
+How Does GSLB Work in CloudStack?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Global server load balancing is used to manage the traffic flow to a web
@@ -131,7 +131,7 @@ will be load balanced across VM1 and VM2 instances.
 Tenant-A acquires another public IP, IP-2 in Zone-2 and sets up a load
 balancer rule to load balance the traffic between VM5 and VM6 instances.
 Similarly in Zone-2, CloudStack orchestrates setting up a virtual server
-on the LB service provider. Virtual server 2 that is setup on the LB
+on the LB service provider. Virtual server 2 that is set up on the LB
 service provider in Zone-2 represents a publicly accessible virtual
 server that client reaches at IP-2. The client traffic that reaches
 virtual server 2 at IP-2 is load balanced across VM5 and VM6 instances.

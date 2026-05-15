@@ -76,7 +76,7 @@ Manage IPv4 Subnets for Guest Networks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unlike IPv6 (each isolated network with IPv6 support gets a /64 IPv6 network), operators need to manage IPv4 subnets for guest networks.
-An IPv4 subnet for guest networks is created from its parent which is a IPv4 subnet for zone.
+An IPv4 subnet for guest networks is created from its parent, which is an IPv4 subnet for the zone.
 
 There are some global settings which can be set for each account. See below
 
@@ -219,7 +219,7 @@ ROOT admin can change BGP peers of an existing network with Dynamic routing. Aft
 Create VPC with Dynamic Routing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The creation of VPC with Dynamic routing is almost as VPC with static routing. CloudStack will allocate an AS number to the VPC, and 
+The creation of a VPC with Dynamic routing is almost the same as a VPC with static routing. CloudStack will allocate an AS number to the VPC, and
 - If the VPC owner does not have dedicated BGP peers, or account setting "use.system.bgp.peers" is set to true, configure BGP sessions in the VPC VR to connect to all BGP peers the VPC owner can access.
 - If the VPC owner has dedicated BGP peers, and account setting "use.system.bgp.peers" is set to false, configure BGP sessions in the VPC VR to connect to all dedicated BGP peers of the domain and the VPC owner.
 
@@ -231,8 +231,8 @@ ROOT admin can change BGP peers of an existing VPC with Dynamic routing. After t
    If a BGP peer is added, removed or updated, the existing network VRs and VPC VRs will not be automatically reconfigured. Please restart the network or VPC to reconfigure the VRs.
 
 
-CloudStack Kubernetes Service support on ROUTED networks and VPCs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CloudStack Kubernetes Service support for ROUTED networks and VPCs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To support CloudStack Kubernetes Service on ROUTED networks and VPCs, operators have to configure the networks.
 

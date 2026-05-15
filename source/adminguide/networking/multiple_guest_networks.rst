@@ -37,7 +37,7 @@ Additional networks can either be available to all accounts or be
 assigned to a specific account. Networks that are available to all
 accounts are zone-wide. Any user with access to the zone can create an instance
 with access to that network. These zone-wide networks provide little or
-no isolation between guests.Networks that are assigned to a specific
+no isolation between guests. Networks that are assigned to a specific
 account provide strong isolation.
 
 
@@ -75,7 +75,7 @@ Adding an Additional Guest Network
 Reconfiguring Networks in instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CloudStack provides you the ability to move instances between networks and
+CloudStack provides you with the ability to move instances between networks and
 reconfigure an instance's network. You can remove an instance from a network and add
 to a new network. You can also change the default network of a virtual
 machine. With this functionality, hybrid or traditional server loads can

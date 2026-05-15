@@ -20,7 +20,7 @@ Portable IPs
 About Portable IP
 ~~~~~~~~~~~~~~~~~
 
-Portable IPs in CloudStack are region-level pool of IPs, which are
+Portable IPs in CloudStack are a region-level pool of IPs, which are
 elastic in nature, that can be transferred across geographically
 separated zones. As an administrator, you can provision a pool of
 portable public IPs at region level and are available for user
@@ -47,7 +47,7 @@ The salient features of Portable IP are as follows:
    Portable IPs is currently not supported in the new UI.
    To manage Portable IPs, please directly invoke the
    respective APIs or use `cloudmonkey <https://github.com/apache/cloudstack-cloudmonkey>`_,
-   the CLI tool for cloudstack
+   the CLI tool for CloudStack
 
 
 Guidelines

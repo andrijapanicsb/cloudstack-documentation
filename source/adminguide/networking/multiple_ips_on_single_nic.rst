@@ -17,7 +17,7 @@
 Configuring Multiple IP Addresses on a Single NIC
 -------------------------------------------------
 
-CloudStack provides you the ability to associate multiple private IP
+CloudStack provides you with the ability to associate multiple private IP
 addresses per Guest Instance NIC. In addition to the primary IP, you can
 assign additional IPs to the Guest Instance NIC. This feature is supported on
 all the network configurations: Basic, Advanced, and VPC. Security

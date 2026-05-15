@@ -44,8 +44,8 @@ router. To ensure that outbound traffic goes through NetScaler device
 providing EIP/ELB, layer 3 router must have a policy-based routing. A
 policy-based route must be set up so that all traffic originated from
 the Guest Instance's are directed to NetScaler device. This is required to
-ensure that the outbound traffic from the Guest Instance's is routed to a
-public IP by using NAT.For more information on Elastic IP, see
+ensure that the outbound traffic from the Guest Instances is routed to a
+public IP by using NAT. For more information on Elastic IP, see
 `"About Elastic IP" <#about-elastic-ip>`_.
 
 The NetScaler can be set up in direct (outside the firewall) mode. It
@@ -55,7 +55,7 @@ in the zone.
 The functional behavior of the NetScaler with CloudStack is the same as
 described in the CloudStack documentation for using an F5 external load
 balancer. The only exception is that the F5 supports routing domains,
-and NetScaler does not. NetScaler can not yet be used as a firewall.
+and NetScaler does not. NetScaler cannot yet be used as a firewall.
 
 To install and enable an external load balancer for CloudStack
 management, see External Guest Load Balancer Integration in the
@@ -265,7 +265,7 @@ Adding a Load Balancer Rule
 #. Click the Load Balancing tab.
 
    In a Basic zone, you can also create a load balancing rule without
-   acquiring or selecting an IP address. CloudStack internally assign an
+   acquiring or selecting an IP address. CloudStack internally assigns an
    IP when you create the load balancing rule, which is listed in the IP
    Addresses page when the rule is created.
 
@@ -414,7 +414,7 @@ Load Balancer Configurations
 
 (CloudStack Virtual Router and Vpc Virtual Router only)
 
-CloudStack Virtual Routers use haproxy to provide load balancer.The following is the configurations of haproxy.
+CloudStack Virtual Routers use haproxy to provide load balancing. The following shows the haproxy configuration.
 
 .. cssclass:: table-striped table-bordered table-hover
 
@@ -497,9 +497,9 @@ Click "Upload SSL Certificate" button, input the following fields in the dialog,
     * Name: the name of the SSL certificate. This is required.
     * Certificate: the SSL certificate. This is required.
     * Private Key: the private key of the SSL certificate. This is required.
-    * Certificate chain: the ROOT CA and intermediate certificate(s) of the SSL certificate. Please input if exist, otherwise the SSL certificate might not work.
-    * Password: the password of the private key. Currently it is unsupported when use CloudStack Virtual Router for SSL offloading.
-    * Revocation check: Whether enables revocation checking for certificates. Please do not check if self-signed SSL certificate.
+    * Certificate chain: the ROOT CA and intermediate certificate(s) of the SSL certificate. Please input if it exists, otherwise the SSL certificate might not work.
+    * Password: the password of the private key. Currently it is unsupported when using CloudStack Virtual Router for SSL offloading.
+    * Revocation check: Whether to enable revocation checking for certificates. Please do not check if using a self-signed SSL certificate.
 
 |ssl-certificate-upload.png|
 

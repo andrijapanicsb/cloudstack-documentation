@@ -360,7 +360,7 @@ destination" and / or "allow all ingress source" rule to the ACL.
 Afterwards traffic can be white- or blacklisted.
 
 .. note::
-    - ACL Rules in Cloudstack are stateful
+    - ACL Rules in CloudStack are stateful
     - Source / Destination CIDRs are always external Networks
     - ACL rules can also been seen on the virtual router of the VPC. Ingress
       rules are listed in the table iptables table "filter" while egress rules
@@ -740,7 +740,7 @@ Deploying Instances to the Tier
 Deploying Instances to VPC Tier and Shared Networks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CloudStack allows you deploy Instances on a VPC tier and one or more shared
+CloudStack allows you to deploy Instances on a VPC tier and one or more shared
 networks. With this feature, Instances deployed in a multi-tier application
 can receive monitoring services via a shared network provided by a
 service provider.
@@ -941,7 +941,7 @@ function only if they are defined on the default network.
 
 #. Click the IP you want to work with.
 
-#. In the Details tab,click the Static NAT button. |enable-disable.png|
+#. In the Details tab, click the Static NAT button. |enable-disable.png|
    The button toggles between Enable and
    Disable, depending on whether static NAT is currently enabled for the
    IP address.

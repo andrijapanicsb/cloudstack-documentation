@@ -14,8 +14,8 @@
    under the License.
 
 
-Setup a Palo Alto Networks Firewall
------------------------------------
+Set Up a Palo Alto Networks Firewall
+------------------------------------
 
 
 Functionality Provided
@@ -98,7 +98,7 @@ Anatomy of the Palo Alto Networks Firewall
 Configure the Public / Private Zones on the firewall
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-No manual configuration is required to setup these zones because CloudStack 
+No manual configuration is required to set up these zones because CloudStack
 will configure them automatically when you add the Palo Alto Networks firewall 
 device to CloudStack as a service provider.  This implementation depends on 
 two zones, one for the public side and one for the private side of the 
@@ -257,7 +257,7 @@ To clarify this concept, we will use the following example.
 #. Enter '172.30.0.254/24' in the new line
 
    -  The IP can be any IP outside the CloudStack public IP range, but inside 
-      the CloudStack public range netmask (it can NOT be the gateway IP)
+      the CloudStack public range netmask (it cannot be the gateway IP)
    
    -  The subnet defined by the CIDR should match the CloudStack public range 
       netmask
@@ -280,8 +280,8 @@ the changes.
 
 
 
-Setup the Palo Alto Networks Firewall in CloudStack
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set Up the Palo Alto Networks Firewall in CloudStack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add the Palo Alto Networks Firewall as a Service Provider
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -306,10 +306,10 @@ Add the Palo Alto Networks Firewall as a Service Provider
    
    -  **Type**: Palo Alto Firewall
    
-   -  **Public Interface**: ethernet1/1 (use what you setup earlier as the 
+   -  **Public Interface**: ethernet1/1 (use what you set up earlier as the
       public interface if it is different from my examples)
    
-   -  **Private Interface**: ethernet1/2 (use what you setup earlier as the 
+   -  **Private Interface**: ethernet1/2 (use what you set up earlier as the
       private interface if it is different from my examples)
    
    -  **Number of Retries**: 2 (the default is fine)

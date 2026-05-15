@@ -17,7 +17,7 @@
 Reserving Public IP Addresses and VLANs for Accounts
 ----------------------------------------------------
 
-CloudStack provides you the ability to reserve a set of public IP
+CloudStack provides you with the ability to reserve a set of public IP
 addresses and VLANs exclusively for an account. During zone creation,
 you can continue defining a set of VLANs and multiple public IP ranges.
 This feature extends the functionality to enable you to dedicate a fixed
@@ -25,7 +25,7 @@ set of VLANs and guest IP addresses for a tenant.
 
 Note that if an account has consumed all the VLANs and IPs dedicated to
 it, the account can acquire two more resources from the system.
-CloudStack provides the root admin with two configuration parameter to
+CloudStack provides the root admin with two configuration parameters to
 modify this default behavior: use.system.public.ips and
 use.system.guest.vlans. These global parameters enable the root admin to
 disallow an account from acquiring public IPs and guest VLANs from the

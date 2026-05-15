@@ -43,7 +43,7 @@ Any CloudStack user can set up any number of additional security groups.
 When a new instance is launched, it is assigned to the default security group
 unless another user-defined security group is specified. An instance can be a
 member of any number of security groups. You can change the security groups of an instance only in a stopped state; you
-can not move a running instance from one security group to another.
+cannot move a running instance from one security group to another.
 
 You can modify a security group by deleting or adding any number of
 ingress and egress rules. When you do, the new rules apply to all instances in

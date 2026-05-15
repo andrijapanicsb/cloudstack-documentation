@@ -261,7 +261,7 @@ secure alternatives:
 **Events and Alerts:**
 
 There is a thread that run periodically to check for VPN Customer Gateways which
-are using excluded or obsolete cryptographic parameters.The interval at which this thread
+are using excluded or obsolete cryptographic parameters. The interval at which this thread
 runs is configurable using the setting **vpn.customer.gateway.obsolete.check.interval**.
 The unit is in hours and the default value is 0 which means it is disabled by default.
 
