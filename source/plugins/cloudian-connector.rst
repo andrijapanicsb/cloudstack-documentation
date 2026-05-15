@@ -352,10 +352,10 @@ Table: Example Domain Names that should Resolve on CloudStack Servers
 Adding Cloudian as CloudStack Secondary Storage
 -----------------------------------------------
 
-Setup a Cloudian User and Bucket for Secondary Storage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set Up a Cloudian User and Bucket for Secondary Storage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-S3 Secondary Storage stores the CloudStack Templates, Snapshots etc in a
+S3 Secondary Storage stores the CloudStack Templates, Snapshots, etc. in a
 dedicated S3 Bucket. To properly configure CloudStack you will need to know the
 S3 Bucket name and how to access your S3 Server (the S3 endpoint, access key and
 secret key).
@@ -422,7 +422,7 @@ Attach Cloudian as Secondary Storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 CloudStack supports using either S3 or NFS as Secondary Storage but not both.
-The below instructions assume you are not using Secondary Storage on NFS and
+The instructions below assume you are not using Secondary Storage on NFS and
 that you can delete it to add the S3 storage.
 
 .. note::

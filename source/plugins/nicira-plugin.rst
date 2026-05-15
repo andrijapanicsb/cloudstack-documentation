@@ -21,7 +21,7 @@ Introduction to the Nicira NVP Plugin
 -------------------------------------
 
 The Nicira NVP plugin adds Nicira NVP as one of the available SDN
-implementations in CloudStack. With the plugin an existing Nicira NVP
+implementations in CloudStack. With the plugin, an existing Nicira NVP
 setup can be used by CloudStack to implement isolated guest Networks and
 to provide additional services like routing and NAT.
 
@@ -139,7 +139,7 @@ isolation type. Navigate to the Nicira NVP provider and press the
 Device Management
 ~~~~~~~~~~~~~~~~~
 
-In CloudStack a Nicira NVP setup is considered a "device" that can be added
+In CloudStack, a Nicira NVP setup is considered a "device" that can be added
 and removed from a physical Network. To complete the configuration of
 the Nicira NVP plugin a device needs to be added to the physical
 Network. Press the "Add NVP Controller" button on the provider panel and

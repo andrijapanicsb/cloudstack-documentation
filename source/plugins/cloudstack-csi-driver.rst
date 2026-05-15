@@ -45,7 +45,7 @@ To enable CSI integration, the CKS data ISOs must have the CSI manifests. Rebuil
 |cks-csi-integration.png|
 
 Enabling CSI integration for a CKS cluster can be done by selecting the `Enable CSI Integration` checkbox in the Advanced Settings section of the Kubernetes cluster creation form.
-Doing so will setup the CSI components - the CSI controller and the CSI node daemonset - on the cluster during its creation.
+Doing so will set up the CSI components - the CSI controller and the CSI node daemonset - on the cluster during its creation.
 
 |cks-csi-pods.png|
 

@@ -441,19 +441,19 @@ Note: The User Data and Metadata of the underlying host can be accessed by the c
 Kubernetes cluster web dashboard
 #################################
 
-The service while creating a cluster automatically deploys dashboard for the cluster. More details about Kubernetes dashboard here: https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+While creating a cluster, the service automatically deploys the dashboard for the cluster. More details about the Kubernetes dashboard are available here: https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
-Instructions for accessing the dashboard for a running cluster will be shown in the Access tab in the UI. Essentially, the user needs to run a local proxy first using kubectl and kubecofig file for the cluster to access the dashboard. For secure login, the service doesn’t enable kubeconfig based login for the dashboard. Token-based access is enabled and kubectl can be used to access service Account secret token.
+Instructions for accessing the dashboard for a running cluster will be shown in the Access tab in the UI. Essentially, the user needs to run a local proxy first using kubectl and the kubeconfig file for the cluster to access the dashboard. For secure login, the service doesn't enable kubeconfig-based login for the dashboard. Token-based access is enabled, and kubectl can be used to access the service Account secret token.
 
 |cks-cluster-access-tab.png|
 
-The following command can be used, while passing the correct path to kubeconfig file, to run proxy:
+The following command can be used, while passing the correct path to the kubeconfig file, to run the proxy:
 
 .. parsed-literal::
 
    # kubectl --kubeconfig /custom/path/kube.config proxy
 
-Once the proxy is running, users can open the following URL in the browser to access the dashboard,
+Once the proxy is running, users can open the following URL in the browser to access the dashboard:
 
 .. parsed-literal::
 
@@ -461,7 +461,7 @@ Once the proxy is running, users can open the following URL in the browser to ac
 
 |cks-cluster-dashboard.png|
 
-Token for dashboard login can be retrieved using the following command:
+The token for dashboard login can be retrieved using the following command:
 
 .. parsed-literal::
 
@@ -810,7 +810,7 @@ For verification of the applied CNI Configuration, the following commands can be
 
    Events:                <none>
 
-There could be Calico routing edge case encountered in some environments. By default, Calico uses the 192.168.0.0/16 network for its pod IP pool when you install it with the standard manifests. To avoid potential routing conflicts with existing networks in your infrastructure, it's advisable to customize the Calico IP pool to use a different subnet that doesn't overlap with your current network setup.
+A Calico routing edge case could be encountered in some environments. By default, Calico uses the 192.168.0.0/16 network for its pod IP pool when you install it with the standard manifests. To avoid potential routing conflicts with existing networks in your infrastructure, it's advisable to customize the Calico IP pool to use a different subnet that doesn't overlap with your current network setup.
 
 kubectl get ippool.crd.projectcalico.org -o yaml
 

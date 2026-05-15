@@ -69,7 +69,7 @@ have MTU of 1500 bytes, meaning that your physical interface/bridge must have MT
 In order to configure "jumbo frames" you can i.e. make physical interface/bridge with 9000 bytes MTU, then all the VXLAN
 interfaces will be created with MTU of 8950 bytes, and then MTU size inside Instance can be set to 8950 bytes.
 
-In general it is recommend to use an MTU of at least 9000 bytes or larger. Most VXLAN capable network cards and switch support an MTU of up to 9216.
+In general, it is recommended to use an MTU of at least 9000 bytes or larger. Most VXLAN-capable network cards and switches support an MTU of up to 9216.
 
 Using an MTU of 9216 bytes allows for using Jumbo Frames (9000) within guest networks. 
 
@@ -81,11 +81,11 @@ The default mode for using VXLAN is Multicast. The required configuration is des
 Important note on max number of multicast groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Default value of "net.ipv4.igmp_max_memberships" (cat /proc/sys/net/ipv4/igmp_max_memberships) is "20", which means that host can be joined to max 20 multicast groups (attach max 20 multicast IPs on the host).
+Default value of "net.ipv4.igmp_max_memberships" (cat /proc/sys/net/ipv4/igmp_max_memberships) is "20", which means that a host can be joined to max 20 multicast groups (attach max 20 multicast IPs on the host).
 
-Since all VXLAN (VTEP) interfaces provisioned on host are multicast-based (belong to certain multicast group, and thus has it is own multicast IP that is used as VTEP), this means that you can not provision more than 20 (working) VXLAN interfaces per host.
+Since all VXLAN (VTEP) interfaces provisioned on a host are multicast-based (belong to a certain multicast group, and thus have their own multicast IP that is used as VTEP), this means that you cannot provision more than 20 (working) VXLAN interfaces per host.
 
-Under Linux you can NOT by default provision (start) more than 20 VXLAN interfaces and the error message "No buffer space available" will appear in the Cloudstack Agent logs after provisioning the required bridges and VXLAN interfaces.
+Under Linux, you cannot provision (start) more than 20 VXLAN interfaces by default, and the error message "No buffer space available" will appear in the CloudStack Agent logs after provisioning the required bridges and VXLAN interfaces.
 
 Increase the needed parameter to an appropriate value (i.e. 100 or 200) as required.
 
@@ -249,9 +249,9 @@ VXLAN using EVPN
 ---------------------
 Using VXLAN with BGP+EVPN as underlay is more complex to set up, but does allow for more scaling and provides much more flexibility.
 
-This documentation can not cover all elements of deploying BGP+EVPN in your environment.
+This documentation cannot cover all elements of deploying BGP+EVPN in your environment.
 
-It is recommend to read `this blogpost <https://vincent.bernat.ch/en/blog/2017-vxlan-bgp-evpn>`_ before you continue. 
+It is recommended to read `this blogpost <https://vincent.bernat.ch/en/blog/2017-vxlan-bgp-evpn>`_ before you continue.
 
 The main items for using EVPN:
 
@@ -363,11 +363,11 @@ This will differ per network and is therefore difficult to capture in this docum
 
 The exact BGP and EVPN configuration will differ per networking vendor and thus differs per deployment.
 
-Setup zone using VXLAN
-----------------------
+Set Up a Zone Using VXLAN
+-------------------------
 
 In almost all parts of zone setup, you can just follow the advanced zone
-setup instruction in "CloudStack Installation Guide" to use this plugin. It
+setup instructions in the "CloudStack Installation Guide" to use this plugin. It
 is not required to add a Network element nor to reconfigure the Network
 offering. The only thing you have to do is configure the physical
 Network to use VXLAN as the isolation method for Guest Network.
