@@ -255,7 +255,7 @@ We need to configure the machine to use a CloudStack package repository.
    to take the source release and generate RPMs and a yum repository. This
    guide attempts to keep things as simple as possible, and thus we are using 
    one of the community-provided yum repositories. Furthermore, this example 
-   assumes a |release| Cloudstack install - substitute versions as needed.
+   assumes a |release| CloudStack install - substitute versions as needed.
 
 To add the CloudStack repository, create /etc/yum.repos.d/cloudstack.repo and 
 insert the following information.
@@ -408,9 +408,9 @@ up the management server by issuing the following command:
 
       Use the ``--systemvm-templates`` argument to specify which templates to
       download. Valid values are ``all``, ``kvm-aarch64``, ``kvm-x86_64``,
-      ``xenserver``, and ``vmware``. A comma-separated  list combining any of
+      ``xenserver``, and ``vmware``. A comma-separated list combining any of
       these identifiers can also be supplied (for example
-      ``kvm-x86_64,xenserver``). If not specified, ``kvm-x86_64`` template
+      ``kvm-x86_64,xenserver``). If not specified, the ``kvm-x86_64`` template
       will be downloaded by default.
 
       For offline environments, provide a custom repository URL with the
