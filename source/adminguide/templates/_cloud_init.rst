@@ -17,7 +17,7 @@
 Cloud-init integration
 -------------------------
 
-Cloudstack and cloud-init integration provide Instances with advanced management features such as:
+The CloudStack and cloud-init integration provides Instances with advanced management features such as:
 
 *  Password management
 *  SSH keys management
@@ -52,7 +52,7 @@ These features can be implemented in `“Linux Template creation process” <_cr
 
      apt-get install -y cloud-init wget
 	 
-   Configure cloud-init to detect Cloudstack data source during runtime.
+   Configure cloud-init to detect the CloudStack data source during runtime.
 	
    Cloud-init data sources can be specified in /etc/cloud/cloud.cfg.d/ directory. Add the following config in /etc/cloud/cloud.cfg.d/99_cloudstack.cfg.
    
@@ -64,7 +64,7 @@ These features can be implemented in `“Linux Template creation process” <_cr
        None: {}
 
    .. note::
-      For the vm instances running on VMware or XenServer/XCP-ng hypervisors, if there are multiple cloud-init data sources, it is a known issue that ds-identify is not able to detect if "CloudStack" DataSource is enabled. To fix the problem, please run the following command to enable cloud-init without any aid from ds-identify.
+      For the VM instances running on VMware or XenServer/XCP-ng hypervisors, if there are multiple cloud-init data sources, it is a known issue that ds-identify cannot detect if "CloudStack" DataSource is enabled. To fix the problem, please run the following command to enable cloud-init without any aid from ds-identify.
 
         .. code:: bash
 
@@ -72,7 +72,7 @@ These features can be implemented in `“Linux Template creation process” <_cr
 	   
 #. **Password management**
 
-   Cloudstack integration with cloud-init `set-passwords module <https://cloudinit.readthedocs.io/en/latest/topics/modules.html?highlight=ssh_pwauth#set-passwords>`_ will enable the platform to set a password for each Instance created from the Main Template. Additionally it will allow to reset the user password through the GUI.
+   CloudStack integration with cloud-init `set-passwords module <https://cloudinit.readthedocs.io/en/latest/topics/modules.html?highlight=ssh_pwauth#set-passwords>`_ will enable the platform to set a password for each Instance created from the Main Template. Additionally, it will allow users to reset the user password through the GUI.
    
    - **Enable set_passwords module on every boot**
    
@@ -84,7 +84,7 @@ These features can be implemented in `“Linux Template creation process” <_cr
 	
    - **Specify the managed user**
    
-     Cloudstack will create the user, set a password and reset it when requested. To do that set the following configuration in /etc/cloud/cloud.cfg.d/80_user.cfg
+     CloudStack will create the user, set a password and reset it when requested. To do that, set the following configuration in /etc/cloud/cloud.cfg.d/80_user.cfg
 		
      .. code:: bash
 
@@ -98,9 +98,9 @@ These features can be implemented in `“Linux Template creation process” <_cr
 
 #. **SSH keys management**
 
-   Cloud-init `ssh module <https://cloudinit.readthedocs.io/en/latest/topics/modules.html#ssh>`_ can automatically install new SSH keys when set or reset from Cloudstack GUI.
-   By default the module runs once during Instance creation and will fetch Cloudstack keys without any additional configuration.
-   To enable Cloudstack reset SSH keys feature configure cloud-init ssh module to run on every boot.
+   Cloud-init `ssh module <https://cloudinit.readthedocs.io/en/latest/topics/modules.html#ssh>`_ can automatically install new SSH keys when set or reset from the CloudStack GUI.
+   By default, the module runs once during Instance creation and will fetch CloudStack keys without any additional configuration.
+   To enable the CloudStack reset SSH keys feature, configure the cloud-init ssh module to run on every boot.
    
    .. code:: bash
    

@@ -41,7 +41,7 @@ To enable this option for a Template:
 
 After the Template is registered, it is automatically available for instance deployments.
 
-From CloudStack 4.14.0, system VM Templates also support direct download. An administrator can register a new system VM Template as ROUTING or USER type with the direct download flag, and it can be changed to SYSTEM type during the upgrade or by out-of-band database changes. Type of newly registered Template can be changed to SYSTEM in the database using a SQL query similar to:
+From CloudStack 4.14.0, system VM Templates also support direct download. An administrator can register a new system VM Template as ROUTING or USER type with the direct download flag, and it can be changed to SYSTEM type during the upgrade or by out-of-band database changes. The type of a newly registered Template can be changed to SYSTEM in the database using a SQL query similar to:
 
 .. code:: bash
 
@@ -65,7 +65,7 @@ CloudStack provides some APIs to handle certificates for direct downloads:
       - CERTIFICATE_FORMATTED is the string format of a X509 certificate
       - CERTIFICATE_ALIAS is the alias which will be used to import the certificate on each KVM host
 
-   **Note:**. These certificates are imported into the /etc/cloudstack/agent/cloud.jks keystore on each KVM host.
+   **Note:** These certificates are imported into the /etc/cloudstack/agent/cloud.jks keystore on each KVM host.
 
 - Revoke a certificate from every host in 'Up' state in a zone with id = ZONE_ID:
    

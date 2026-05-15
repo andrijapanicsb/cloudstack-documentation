@@ -18,10 +18,10 @@ Creating a Linux Template
 -------------------------
 
 Linux Templates should be prepared using this documentation in order to
-prepare your linux Instances for Template deployment. For ease of
+prepare your Linux Instances for Template deployment. For ease of
 documentation, the Instance which you are configuring the Template on will be
 referred to as "Main Template". The final product, as created and usable
-for deployment in Cloudstack, will be referred as "Final Template".
+for deployment in CloudStack, will be referred to as "Final Template".
 This guide will cover cloud-init setup and scripted setups where available.  It is assumed that openssh-server
 is installed during installation.
 
@@ -73,7 +73,7 @@ templating of Centos and Ubuntu.
    
 #. **Networking**
 
-   Set Template Network interface configuration to DHCP so Cloudstack infrastructure can assign one on boot.
+   Set Template Network interface configuration to DHCP so CloudStack infrastructure can assign one on boot.
 	
    .. warning::
    
@@ -118,19 +118,19 @@ templating of Centos and Ubuntu.
 	 
 #. **SSH keys management**
 
-   Cloudstack can create key pair and push certificates to Instances. This feature is available with:
+   CloudStack can create a key pair and push certificates to Instances. This feature is available with:
    
    *  `Cloud-init integration <templates/_cloud_init.html#linux-with-cloud-init>`_
-   *  `Implementing a SSH-Key bash script <http://docs.cloudstack.apache.org/en/latest/adminguide/virtual_machines.html#creating-an-instance-template-that-supports-ssh-keys>`_   
+   *  `Implementing an SSH-Key bash script <http://docs.cloudstack.apache.org/en/latest/adminguide/virtual_machines.html#creating-an-instance-template-that-supports-ssh-keys>`_
 	 
 #. **Partition management**
 	
-   Volumes can autorextend after reboot when partition is extended in the GUI.
+   Volumes can auto-extend after reboot when the partition is extended in the GUI.
    This feature is possible with `Cloud-init integration <templates/_cloud_init.html#linux-with-cloud-init>`_.
    
 #. **User Data**
 	
-   Cloudstack can push User Data during Instance creation.
+   CloudStack can push User Data during Instance creation.
    This feature is possible with `Cloud-init integration <templates/_cloud_init.html#linux-with-cloud-init>`_.
 	
 #. **Template cleanup**
