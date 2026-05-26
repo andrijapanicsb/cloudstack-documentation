@@ -195,6 +195,328 @@ When importing an instance from VMware to KVM, CloudStack performs the following
 
 .. note:: The resulting imported VM uses the default Guest OS type: **CentOS 4.5 (32-bit)**. After importing the VM, please Edit the Instance to change the Guest OS Type accordingly.
 
+VMware CBT migration mode
+-------------------------
+
+VMware Changed Block Tracking (CBT) migration mode provides a replication-style
+VMware-to-KVM migration workflow. Instead of exporting the complete VM through
+OVF and converting it in one operation, CloudStack creates an initial disk
+replica on the destination primary storage, then copies only VMware CBT changed
+blocks in later sync cycles. The source VMware VM can remain powered on during
+the initial sync and normal delta sync cycles. The source VM must be powered off
+before final cutover.
+
+CBT migration mode is intended for large VMs where a single long conversion
+window is undesirable. It does not provide live migration. The final cutover is
+a controlled outage: the operator shuts down the source VMware VM, CloudStack
+runs one final CBT delta sync, finalizes the replicated disks with ``virt-v2v``,
+and imports the converted VM into the selected KVM cluster.
+
+High-level CBT workflow
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The CBT migration workflow has these stages:
+
+#. The administrator selects VMware migration mode ``CBT`` in the
+   *Tools > Import-Export Instances* VMware import wizard.
+#. CloudStack validates the source VM, selected destination cluster, selected
+   compute offering, target primary storage, and conversion host capability.
+#. CloudStack creates a VMware snapshot and records the source disks and
+   VMware CBT change IDs.
+#. The KVM conversion host performs the initial full sync into a QCOW2 replica
+   under the selected primary storage.
+#. The administrator runs one or more delta sync cycles. Each cycle queries
+   VMware CBT changed block ranges and copies only those ranges into the
+   existing destination replica.
+#. When the migration satisfies the configured quiet-cycle policy, or reaches
+   the configured maximum number of cycles, CloudStack marks it ready for
+   cutover.
+#. The operator gracefully shuts down the source VMware VM.
+#. CloudStack runs the final delta sync while the source is powered off.
+#. CloudStack finalizes the replicated disks with ``virt-v2v``.
+#. CloudStack moves the finalized QCOW2 disks to the selected primary storage
+   root with generated volume UUID names and imports the VM into KVM.
+
+CBT does not power off or gracefully shut down the source VMware VM. This is an
+operator action. If cutover is attempted while the source VM is still powered
+on, CloudStack rejects the request.
+
+Supported source and destination
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CBT migration mode is for VMware source VMs and KVM destination clusters.
+CloudStack supports both source vCenter modes used by the VMware import wizard:
+
+- Existing vCenter/datacenter registered with CloudStack.
+- External vCenter/datacenter supplied in the import wizard.
+
+For QCOW2 file targets, CloudStack stores the initial replica under the selected
+primary storage:
+
+::
+
+   /mnt/<pool-uuid>/cloudstack-cbt/<migration-uuid>/<disk>.qcow2
+
+After successful cutover finalization, the KVM agent moves each finalized disk
+to the primary storage root and assigns a generated UUID filename:
+
+::
+
+   /mnt/<pool-uuid>/<generated-volume-uuid>
+
+The relocated path is returned to the management server in the cutover result
+and persisted in the CBT migration disk record. No manual database update is
+required for normal operation.
+
+KVM host requirements
+~~~~~~~~~~~~~~~~~~~~~
+
+The selected KVM conversion host must support VMware VDDK access and the local
+tools used for block copy and final conversion. At a minimum, install and
+configure:
+
+- ``virt-v2v``
+- ``qemu-img``
+- ``qemu-nbd``
+- ``qemu-io``
+- ``nbdkit`` and the VDDK plugin for ``nbdkit``
+- VMware VDDK libraries
+- ``virtio-win`` when migrating Windows guests
+
+Configure the VDDK library directory in ``/etc/cloudstack/agent/agent.properties``
+on each KVM host that can be selected for VMware import or CBT migration:
+
+::
+
+   vddk.lib.dir=/opt/vmware-vix-disklib-distrib
+
+Restart the CloudStack agent after changing the property:
+
+::
+
+   systemctl restart cloudstack-agent
+
+The management server stores the host capability checks in host details. An
+administrator can inspect them with a query similar to:
+
+::
+
+   SELECT h.id, h.name, hd.name, hd.value
+   FROM cloud.host h
+   JOIN cloud.host_details hd ON hd.host_id = h.id
+   WHERE hd.name IN (
+     'host.vddk.support',
+     'host.vddk.version',
+     'vddk.lib.dir',
+     'host.qemu.img.version',
+     'host.qemu.nbd.version',
+     'host.qemu.io.version',
+     'host.virtv2v.in.place.version',
+     'host.vmware.cbt.support',
+     'host.vmware.cbt.in.place.finalization.support'
+   )
+   ORDER BY h.name, hd.name;
+
+A CBT-capable host reports ``host.vddk.support=true`` and
+``host.vmware.cbt.support=true``. A host that can finalize the CBT replica
+without a second full disk copy reports
+``host.vmware.cbt.in.place.finalization.support=true``.
+
+Windows guest requirement
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Windows VMware guests require VirtIO drivers on the conversion host so that
+``virt-v2v`` can enable the required storage and network drivers for KVM. On
+EL-based hosts this is normally provided by the ``virtio-win`` package:
+
+::
+
+   dnf install virtio-win
+
+If ``virtio-win`` is missing, Windows conversion fails during preflight or
+``virt-v2v`` conversion with an error indicating that the VirtIO Windows driver
+package is not available on the conversion host.
+
+In-place finalization and fallback finalization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After the final CBT delta sync, CloudStack must run ``virt-v2v`` finalization.
+The preferred path is in-place finalization, because it modifies the existing
+replica instead of creating another full converted copy.
+
+CloudStack detects in-place support on the KVM host in this order:
+
+#. ``virt-v2v-in-place`` binary, if present in ``PATH``.
+#. ``virt-v2v --in-place``, if the installed ``virt-v2v`` supports the option.
+
+If neither in-place method is available, CloudStack can use regular
+``virt-v2v -o local`` fallback finalization only when explicitly allowed by the
+global setting:
+
+::
+
+   vmware.cbt.allow.non.inplace.finalization=true
+
+The default is ``false``. With the default value, a KVM host that cannot perform
+in-place finalization is rejected for CBT cutover. This avoids an unexpected
+extra full-disk conversion copy.
+
+When fallback finalization is enabled, CloudStack stages both ``TMPDIR`` and
+``virt-v2v`` output under the migration directory on the selected primary
+storage and validates free space before running the command. Required free
+space is estimated conservatively as two times the summed disk capacity. After
+successful fallback finalization, the fallback output is moved to the primary
+storage root using the same final path layout as in-place finalization.
+
+Global settings
+~~~~~~~~~~~~~~~
+
+The CBT migration policy is controlled by these global settings:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 40 15 45
+   :class: table-striped table-bordered table-hover
+
+   * - Name
+     - Default
+     - Description
+   * - ``vmware.cbt.migration.min.cycles``
+     - ``1``
+     - Minimum completed delta cycles before quiet-cycle readiness can be
+       evaluated.
+   * - ``vmware.cbt.migration.max.cycles``
+     - ``5``
+     - Maximum delta cycles before the migration is considered ready for
+       cutover.
+   * - ``vmware.cbt.migration.quiet.cycles``
+     - ``2``
+     - Number of consecutive quiet cycles required for ready-for-cutover.
+   * - ``vmware.cbt.migration.quiet.bytes``
+     - ``1073741824``
+     - Maximum changed bytes in a cycle for that cycle to be considered quiet.
+   * - ``vmware.cbt.migration.quiet.dirty.rate``
+     - ``16777216``
+     - Maximum dirty rate in bytes per second for a quiet cycle.
+   * - ``vmware.cbt.migration.agent.command.timeout``
+     - ``86400``
+     - Agent command timeout, in seconds, for long-running CBT sync and
+       cutover operations.
+   * - ``vmware.cbt.allow.non.inplace.finalization``
+     - ``false``
+     - Allows regular ``virt-v2v -o local`` fallback finalization when in-place
+       finalization is unavailable.
+
+The UI shows the cutover action only when the migration reaches a cutover-ready
+state. This normally happens after the minimum number of cycles and the
+configured quiet-cycle policy are satisfied, or after the maximum cycle count is
+reached.
+
+Compute offering validation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CloudStack validates the selected compute offering against the source VMware VM
+sizing before starting a CBT migration. The selected offering must be able to
+represent the source VM CPU count, CPU speed, and RAM. This is the same
+principle used by the VMware OVF/VDDK import flow: the validation is intended
+to fail early, before a long migration is started, but it should not be
+stricter than the final VM import path.
+
+Custom constrained offerings are valid when the source VM sizing is within the
+offering's allowed range. Custom unconstrained offerings can be used by passing
+custom CPU and RAM values. For powered-off source VMs where VMware reports CPU
+speed as zero, CloudStack uses a default CPU speed value for validation and
+custom offering prefill. The default CPU speed used for this case is
+``2000 MHz``.
+
+APIs
+~~~~
+
+CBT migration mode uses dedicated APIs:
+
+- ``startVmwareCbtMigration`` starts a new CBT migration and returns an async
+  job.
+- ``listVmwareCbtMigrations`` returns migration state, current step, current
+  step duration, disk target paths, disk state, completed cycles, quiet cycles,
+  changed bytes, dirty rate, and last error details.
+- ``syncVmwareCbtMigration`` starts an additional delta sync and returns an
+  async job.
+- ``cutoverVmwareCbtMigration`` performs the final sync, finalization, and VM
+  import. It returns an async job.
+- ``cancelVmwareCbtMigration`` cancels an active migration and runs cleanup.
+- ``deleteVmwareCbtMigration`` deletes a terminal migration record. Cleanup of
+  destination replica files is controlled by the API cleanup option.
+
+The list API is the detailed progress and status source. The async job API
+indicates whether a start, sync, or cutover request is still running or has
+finished.
+
+UI behaviour
+~~~~~~~~~~~~
+
+The CBT tab is shown under *Tools > Import-Export Instances* when the VMware
+import workflow is active and the relevant APIs are available.
+
+The CBT migrations table shows:
+
+- migration state and current step;
+- current step duration;
+- conversion host;
+- source vCenter, datacenter, host, and cluster;
+- completed and quiet delta cycles;
+- last changed bytes, last dirty rate, and total changed bytes;
+- disk target paths and disk state;
+- per-cycle changed bytes, dirty rate, duration, and description;
+- last error when a migration fails.
+
+The UI polls async jobs for start, sync, and cutover operations. It also
+refreshes the CBT migration list while migrations are active, so operators can
+see state transitions, step duration, and delta-cycle updates without pressing
+the refresh button manually.
+
+Source VM power state and cutover
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Initial sync and normal delta sync cycles can run while the VMware source VM is
+powered on. Cutover requires the source VM to be powered off. CloudStack checks
+the VMware power state immediately before cutover and rejects the operation if
+the VM is still powered on.
+
+CloudStack does not attempt to shut down the guest OS or power off the VMware
+VM. This avoids surprising the operator and avoids encoding site-specific guest
+shutdown policy in the migration path.
+
+Credentials and cleanup
+~~~~~~~~~~~~~~~~~~~~~~~
+
+For external vCenter migrations, CloudStack stores the vCenter connection
+details needed to continue sync and cutover operations. After successful
+completion, CloudStack clears the stored per-migration credentials.
+
+Cancel and delete operations are intended to remove only CBT migration state and
+temporary migration artifacts. They do not delete the source VMware VM. A
+successfully imported destination VM and its CloudStack volumes are not deleted
+by deleting the completed CBT migration record.
+
+Operational notes and limitations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- CBT depends on VMware CBT and VDDK behaviour. The initial sync may still read
+  a large amount of data when VMware reports a large changed or allocated range,
+  especially for some linked-clone or previously non-zeroed disk layouts.
+- Delta cycles should normally be much smaller than the initial sync, because
+  they use VMware CBT changed block ranges after the baseline change ID.
+- The conversion step depends on ``virt-v2v`` guest support. Some guest
+  operating systems, filesystems, boot layouts, or driver combinations may not
+  be convertible.
+- The target KVM root disk controller follows the controller selected by the
+  ``virt-v2v`` output, including the SCSI controller used for CBT finalization.
+- Do not restart management servers or the selected KVM conversion host while a
+  migration operation is in progress.
+- Agent logs contain the detailed ``qemu-img``, ``qemu-nbd``, ``qemu-io``,
+  VDDK, and ``virt-v2v`` output. Management server logs and the CBT list API
+  surface the operation-level error details.
+
 .. |import-vm-from-vmware-to-kvm.png| image:: /_static/images/import-vm-from-vmware-to-kvm.png
    :alt: Import VMware Virtual Machines into KVM.
    :width: 800 px
