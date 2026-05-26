@@ -271,30 +271,25 @@ required for normal operation.
 KVM host requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-The selected KVM conversion host must support VMware VDDK access and the local
-tools used for block copy and final conversion. At a minimum, install and
-configure:
+The selected KVM conversion host must satisfy the same VMware import host
+requirements as the OVF/VDDK migration modes documented above. In particular,
+``virt-v2v`` is still required and is not installed by the CloudStack agent.
+VMware VDDK access must also be configured for the host in the same way as for
+VDDK-based VMware import.
 
-- ``virt-v2v``
-- ``qemu-img``
-- ``qemu-nbd``
-- ``qemu-io``
-- ``nbdkit`` and the VDDK plugin for ``nbdkit``
-- VMware VDDK libraries
-- ``virtio-win`` when migrating Windows guests
+CBT migration mode adds block-level replication and finalization requirements
+on top of that baseline. At a minimum, the selected conversion host must have:
 
-Configure the VDDK library directory in ``/etc/cloudstack/agent/agent.properties``
-on each KVM host that can be selected for VMware import or CBT migration:
+- ``virt-v2v`` available for final guest conversion;
+- ``qemu-img`` for image inspection and conversion;
+- ``qemu-nbd`` for attaching the replicated QCOW2 disks;
+- ``qemu-io`` for changed-block writes;
+- ``nbdkit`` with the VDDK plugin for VMware snapshot access;
+- VMware VDDK libraries configured for the CloudStack agent;
+- Windows VirtIO driver support when migrating Windows guests.
 
-::
-
-   vddk.lib.dir=/opt/vmware-vix-disklib-distrib
-
-Restart the CloudStack agent after changing the property:
-
-::
-
-   systemctl restart cloudstack-agent
+After changing conversion-host packages or VDDK configuration, restart the
+CloudStack agent so the host capability details are refreshed.
 
 The management server stores the host capability checks in host details. An
 administrator can inspect them with a query similar to:
@@ -325,17 +320,16 @@ without a second full disk copy reports
 Windows guest requirement
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Windows VMware guests require VirtIO drivers on the conversion host so that
-``virt-v2v`` can enable the required storage and network drivers for KVM. On
-EL-based hosts this is normally provided by the ``virtio-win`` package:
+Windows VMware guests have the same VirtIO Windows driver requirement as the
+OVF/VDDK VMware import modes described above. The conversion host must provide
+the Windows VirtIO driver files in the location expected by ``virt-v2v``. The
+exact installation method is distribution-specific, so follow the same
+``virtio-win`` guidance used for VDDK import rather than assuming a single
+package command works on every KVM host OS.
 
-::
-
-   dnf install virtio-win
-
-If ``virtio-win`` is missing, Windows conversion fails during preflight or
-``virt-v2v`` conversion with an error indicating that the VirtIO Windows driver
-package is not available on the conversion host.
+If the Windows VirtIO driver files are missing, Windows conversion fails during
+preflight or ``virt-v2v`` conversion with an error indicating that the VirtIO
+Windows driver package is not available on the conversion host.
 
 In-place finalization and fallback finalization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
